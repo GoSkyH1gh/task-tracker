@@ -18,3 +18,18 @@
 .project-item:hover {
   background-color: #ccc2;
 }
+
+.task-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 0;
+}
+
+.task-item {
+  display: block;
+  background-color: #bbb1;
+  backdrop-filter: 15px;
+  border-radius: 15px;
+  padding: 20px;
+}

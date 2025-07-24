@@ -1,11 +1,21 @@
 from fastapi import Depends, FastAPI
 from sqlalchemy.orm import Session
+from fastapi.middleware.cors import CORSMiddleware
 from dependencies import get_db
 from models import User, Project, Task
 from database_methods import NewProject, NewTask, create_project, get_tasks_from_project, create_task, delete_task, delete_project
 
 app = FastAPI()
 
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,       # List of allowed origins
+    allow_credentials=True,      # Allow cookies, authorization headers, etc.
+    allow_methods=["*"],         # Allow all HTTP methods (GET, POST, PUT, DELETE, etc.)
+    allow_headers=["*"],         # Allow all headers
+)
 
 @app.get('/')
 async def root():
