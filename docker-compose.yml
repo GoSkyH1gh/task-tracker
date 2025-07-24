@@ -12,9 +12,9 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   app:
-    build: ./backend
+    build: ./fastapi_backend
     volumes:
-      - .backend/:/app
+      - ./fastapi_backend:/app
     working_dir: /app
     command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
     depends_on:
