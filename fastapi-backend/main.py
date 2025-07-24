@@ -2,12 +2,10 @@ from fastapi import Depends, FastAPI
 from sqlalchemy.orm import Session
 from dependencies import get_db
 from models import User, Project, Task
-from database_methods import NewProject, NewTask, create_project, get_tasks_from_project, create_task, delete_task
+from database_methods import NewProject, NewTask, create_project, get_tasks_from_project, create_task, delete_task, delete_project
 
 app = FastAPI()
 
-def common_parameters():
-    return 
 
 @app.get('/')
 async def root():
@@ -31,7 +29,7 @@ def add_project(project: NewProject, db: Session = Depends(get_db)):
 
 @app.delete('/projects/{project_id}')
 def remove_project(project_id, db: Session = Depends(get_db)):
-    pass # TODO
+    return delete_project(project_id, db)
 
 # --- TASKS ---
 

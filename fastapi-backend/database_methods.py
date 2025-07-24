@@ -73,3 +73,16 @@ def delete_task(project_id: int, task_id: int, db: Session):
         return {
             "error": f"task {task_id} not found"
         }
+    
+def delete_project(project_id: int, db: Session):
+    project = db.query(Project).filter(Project.id == project_id).first()
+    if project:
+        db.delete(project)
+        db.commit()
+        return {
+            "message": f"project {project_id} was deleted successfully"
+        }
+    else:
+        return {
+            "error": f"project {project_id} not found"
+        }
