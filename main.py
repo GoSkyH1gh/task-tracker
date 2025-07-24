@@ -2,6 +2,7 @@ from fastapi import Depends, FastAPI
 from sqlalchemy.orm import Session
 from dependencies import get_db
 from models import User, Project, Task
+from database_methods import NewProject, create_project
 
 app = FastAPI()
 
@@ -23,5 +24,5 @@ def get_projects(db: Session = Depends(get_db)):
     return db.query(Project).all()
 
 @app.post('/projects')
-def add_project(db: Session = Depends(get_db)):
-    pass
+def add_project(project: NewProject, db: Session = Depends(get_db)):
+    return create_project(project, db)
