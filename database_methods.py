@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
 from sqlalchemy.orm import Session
-from models import Project
+from models import Project, Task
 from datetime import datetime
 
 class NewProject(BaseModel):
@@ -15,6 +15,11 @@ class ExistingProject(BaseModel):
     description: Optional[str]
     owner_id: int
     created_at: datetime
+
+class NewTask(BaseModel):
+    title: str
+    description: Optional[str]
+    status: str
 
 def create_project(project: NewProject, db: Session):
     try:
@@ -33,4 +38,38 @@ def create_project(project: NewProject, db: Session):
         return {
             "error": f"Project could not be created"
         }
-    
+
+def get_tasks_from_project(id: int, db: Session):
+    return db.query(Task).filter(Task.project_id == id).all()
+
+def create_task(project_id, task: NewTask, db: Session):
+    try:
+        db.add(Task(
+            title=task.title,
+            description=task.description,
+            project_id=project_id,
+            status=task.status
+        ))
+        db.commit()
+        return {
+                "message": f"Task {task.title} created successfully!"
+            }
+    except Exception as e:
+        print(f"Something went wrong when creating task {task.title}: {e}")
+        db.rollback()
+        return {
+            "error": f"Task could not be created"
+        }
+
+def delete_task(project_id: int, task_id: int, db: Session):
+    task = db.query(Task).filter(Task.id == task_id, Task.project_id == project_id).first()
+    if task:
+        db.delete(task)
+        db.commit()
+        return {
+            "message": f"task {task_id} was deleted successfully"
+        }
+    else:
+        return {
+            "error": f"task {task_id} not found"
+        }
