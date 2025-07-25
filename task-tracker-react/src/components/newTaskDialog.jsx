@@ -2,10 +2,12 @@ import { Dialog } from "radix-ui";
 import "./dialog.css";
 import { useState } from "react";
 
-function NewTaskDialog({ currentProject }) {
+function NewTaskDialog({ currentProject, fetchTasks }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("To be done");
+
+  const [dialogOpen, setDialogOpen] = useState(false) // controls if dialog is open
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,10 +24,12 @@ function NewTaskDialog({ currentProject }) {
     });
     let submitResponse = await submitResponseRaw.json();
     console.log(submitResponse);
+    fetchTasks();
+    setDialogOpen(false);
   };
 
   return (
-    <Dialog.Root>
+    <Dialog.Root open={dialogOpen} onOpenChange={setDialogOpen}>
       <Dialog.Trigger asChild>
         <button>Create a new task</button>
       </Dialog.Trigger>

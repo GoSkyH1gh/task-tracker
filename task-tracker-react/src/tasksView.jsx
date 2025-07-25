@@ -29,7 +29,7 @@ function TasksView() {
       <Link to="/">Back to projects</Link>
       <p>This is the task view of project {projectId}</p>
       <TaskCard tasks={tasks} fetchTasks={fetchTasks} />
-      <NewTaskDialog currentProject={projectId}/>
+      <NewTaskDialog currentProject={projectId} fetchTasks={fetchTasks} />
     </div>
   );
 }
