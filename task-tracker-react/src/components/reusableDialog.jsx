@@ -1,4 +1,4 @@
-import { Dialog } from "radix-ui";
+import * as Dialog from '@radix-ui/react-dialog';
 import "./dialog.css";
 import { useState } from "react";
 

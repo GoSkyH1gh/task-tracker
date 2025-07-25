@@ -1,4 +1,4 @@
-import { Dialog } from "radix-ui";
+import * as Dialog from '@radix-ui/react-dialog';
 import { MdDelete } from "react-icons/md";
 import { motion } from "motion/react";
 import "./dialog.css"
