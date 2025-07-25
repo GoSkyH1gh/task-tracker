@@ -11,7 +11,7 @@ function ReusableDialog({ open, setOpen, title, children }) {
       <Dialog.Portal>
         <Dialog.Overlay className="DialogOverlay" />
         <Dialog.Content className="DialogContent">
-          <Dialog.Title>Create a new task</Dialog.Title>
+          <Dialog.Title>{title}</Dialog.Title>
           <Dialog.Description />
           {children}
         </Dialog.Content>

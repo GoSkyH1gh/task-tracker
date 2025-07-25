@@ -54,3 +54,11 @@
   min-height: 25px;
   min-width: 25px;
 }
+
+a {
+  color: unset
+}
+
+a:hover {
+  color: unset
+}

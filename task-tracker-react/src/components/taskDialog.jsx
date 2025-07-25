@@ -1,5 +1,5 @@
 import { useState } from "react"
-import ReusableDialog from "./newTaskDialog"
+import ReusableDialog from "./reusableDialog"
 import TaskForm from "./taskForm"
 
 function TaskDialog({ currentProject, fetchTasks }) {
