@@ -4,7 +4,6 @@
   backdrop-filter: 15px;
   padding: 20px;
   border-radius: 15px;
-  cursor: pointer;
   transition: 0.3s;
 }
 
@@ -32,4 +31,26 @@
   backdrop-filter: 15px;
   border-radius: 15px;
   padding: 20px;
+  cursor: grab;
+}
+
+.icon-button {
+  background: none;
+  padding: 2px;
+  margin: 10px 0 0 0;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.icon-button:focus {
+  border: 1px slateblue solid;
+}
+
+.icon {
+  min-height: 25px;
+  min-width: 25px;
 }

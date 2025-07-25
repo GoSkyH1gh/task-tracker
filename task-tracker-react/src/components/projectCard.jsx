@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 
+
 function ProjectCard({ projects }) {
   const mappedProjects = projects.map((project) => 
     <li className="project-item" key={project.id}>
