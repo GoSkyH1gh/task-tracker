@@ -3,18 +3,21 @@ from typing import Optional
 from sqlalchemy.orm import Session
 from models import Project, Task
 from datetime import datetime
+from fastapi import HTTPException
 
 class NewProject(BaseModel):
     name: str
     description: Optional[str]
     owner_id: int
 
-class ExistingProject(BaseModel):
-    id: int
-    name: str
-    description: Optional[str]
-    owner_id: int
-    created_at: datetime
+class UpdateTask(BaseModel):
+    title: Optional[str] = None
+    description: Optional[str] = None
+    status: Optional[str] = None
+
+class UpdateProject(BaseModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
 
 class NewTask(BaseModel):
     title: str
@@ -86,3 +89,41 @@ def delete_project(project_id: int, db: Session):
         return {
             "error": f"project {project_id} not found"
         }
+
+def patch_task(project_id: int, task_id: int, update_data: UpdateTask, db: Session):
+    task = db.query(Task).filter(Task.id == task_id, Task.project_id == project_id).first()
+    if not task:
+        raise HTTPException(status_code=404, detail="Task not found")
+    
+    if update_data.title is not None:
+        task.title = update_data.title
+    if update_data.description is not None:
+        task.description = update_data.description
+    if update_data.status is not None:
+        task.status = update_data.status
+
+    db.commit()
+    db.refresh(task)
+
+    return {
+        "message": f"Updated task {task_id} successfully",
+        "updated_task": task
+    }
+
+def patch_project(project_id: int, update_data: UpdateProject, db: Session):
+    project = db.query(Project).filter(Project.id == project_id).first()
+    if not project:
+        raise HTTPException(status_code=404, detail="Project not found")
+    
+    if update_data.name is not None:
+        project.name = update_data.name
+    if update_data.description is not None:
+        project.description = update_data.description
+
+    db.commit()
+    db.refresh(project)
+
+    return {
+        "message": f"Updated project {project_id} successfully",
+        "updated_project": project    
+    }

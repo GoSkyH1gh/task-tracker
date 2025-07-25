@@ -3,7 +3,8 @@ from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 from dependencies import get_db
 from models import User, Project, Task
-from database_methods import NewProject, NewTask, create_project, get_tasks_from_project, create_task, delete_task, delete_project
+from database_methods import NewProject, NewTask, UpdateTask, UpdateProject
+from database_methods import create_project, get_tasks_from_project, create_task, delete_task, delete_project, patch_task, patch_project
 
 app = FastAPI()
 
@@ -41,6 +42,10 @@ def add_project(project: NewProject, db: Session = Depends(get_db)):
 def remove_project(project_id, db: Session = Depends(get_db)):
     return delete_project(project_id, db)
 
+@app.patch('/projects/{project_id}')
+def update_project(project_id, update_project: UpdateProject, db: Session = Depends(get_db)):
+    return patch_project(project_id, update_project, db)
+
 # --- TASKS ---
 
 @app.get('/projects/{project_id}/tasks')
@@ -55,3 +60,6 @@ def add_task(project_id: int, task: NewTask, db: Session = Depends(get_db)):
 def remove_task(project_id: int, task_id: int, db: Session = Depends(get_db)):
     return delete_task(project_id, task_id, db)
 
+@app.patch('/projects/{project_id}/tasks/{task_id}')
+def update_task(project_id: int, task_id: int, task: UpdateTask, db: Session = Depends(get_db)):
+    return patch_task(project_id, task_id, task, db)
