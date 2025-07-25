@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import TaskCard from "./components/taskCard";
+import NewTaskDialog from "./components/newTaskDialog";
 
 function TasksView() {
   const params = useParams();
@@ -24,11 +25,12 @@ function TasksView() {
   }, []);
 
   return (
-    <>
+    <div className="content-container">
       <Link to="/">Back to projects</Link>
       <p>This is the task view of project {projectId}</p>
-      <TaskCard tasks={ tasks } fetchTasks={ fetchTasks } />
-    </>
+      <TaskCard tasks={tasks} fetchTasks={fetchTasks} />
+      <NewTaskDialog currentProject={projectId}/>
+    </div>
   );
 }
 

@@ -19,7 +19,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <div className="content-container">
       <h2>Task tracker</h2>
       {projects.length > 0 && (
         <>
@@ -28,7 +28,7 @@ function App() {
         </>
       )}
       {projects.length === 0 && <p>You have no projects</p>}
-    </>
+    </div>
   );
 }
 
