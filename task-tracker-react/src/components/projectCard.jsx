@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import { MdDelete } from "react-icons/md";
-import { motion } from "motion/react";
+import ConfirmDeleteDialog from "./confirmDeleteDialog";
 
 function ProjectCard({ projects, fetchProjects }) {
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
@@ -20,14 +19,7 @@ function ProjectCard({ projects, fetchProjects }) {
           <p>{project.description || <>No description</>}</p>
         </div>
       </Link>
-      <motion.button
-        whileHover={{ scale: 1.3 }}
-        whileTap={{ scale: 0.9 }}
-        transition={{ ease: "easeInOut", duration: 0.15 }}
-        onClick={() => deleteProject(project.id)}
-        className="icon-button">
-        <MdDelete className="icon"/>
-      </motion.button>
+      <ConfirmDeleteDialog functionToExecute={() => deleteProject(project.id)} />
     </li>
     )
   return (
