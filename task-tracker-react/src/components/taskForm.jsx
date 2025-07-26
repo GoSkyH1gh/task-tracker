@@ -43,8 +43,7 @@ function TaskForm({ currentProject, fetchTasks, closeDialog }) {
         </label>
         <br />
         <label>
-          Description (optional)
-          <br />
+          <div className="label-row">Description <span className="label-optional">optional</span></div>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
