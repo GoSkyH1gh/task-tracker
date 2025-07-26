@@ -2,22 +2,14 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import ProjectCard from "./components/projectCard";
 import ProjectDialog from "./components/projectDialog";
+import fetchProjects from "./components/fetchProjects";
 
 function App() {
   const loggedInUser = 1;
   const [projects, setProjects] = useState([]);
 
-  const baseUrl = import.meta.env.VITE_API_BASE_URL;
-
-  const fetchProjects = async () => {
-    let projectsResponseRaw = await fetch(baseUrl + "projects");
-    let projectsResponse = await projectsResponseRaw.json();
-    console.log(projectsResponse);
-    setProjects(projectsResponse);
-  }
-
   useEffect(() => {
-    fetchProjects();
+    fetchProjects(setProjects);
   }, []);
 
   return (
