@@ -8,7 +8,6 @@ from fastapi import HTTPException
 class NewProject(BaseModel):
     name: str
     description: Optional[str]
-    owner_id: int
 
 class UpdateTask(BaseModel):
     title: Optional[str] = None
@@ -24,12 +23,12 @@ class NewTask(BaseModel):
     description: Optional[str]
     status: str
 
-def create_project(project: NewProject, db: Session):
+def create_project(project: NewProject, db: Session, current_user):
     try:
         db.add(Project(
             name=project.name,
             description=project.description,
-            owner_id=project.owner_id,
+            owner_id=current_user.id,
         ))
         db.commit()
         return {
@@ -42,11 +41,22 @@ def create_project(project: NewProject, db: Session):
             "error": f"Project could not be created"
         }
 
-def get_tasks_from_project(id: int, db: Session):
-    return db.query(Task).filter(Task.project_id == id).all()
+def get_tasks_from_project(id: int, db: Session, current_user):
+    return db.query(Task)\
+            .join(Project)\
+            .filter(Task.project_id == id)\
+            .filter(Project.owner_id == current_user.id)\
+            .all()
 
-def create_task(project_id, task: NewTask, db: Session):
+def create_task(project_id, task: NewTask, db: Session, current_user):
     try:
+        project = db.query(Project).filter(Project.id == project_id).first()
+        if project is not None:
+            if project.owner_id != current_user.id:
+                return {"error": "Not authorized to access project"}
+        else:
+            return {"error": "Project not found"}
+            
         db.add(Task(
             title=task.title,
             description=task.description,
@@ -64,8 +74,12 @@ def create_task(project_id, task: NewTask, db: Session):
             "error": f"Task could not be created"
         }
 
-def delete_task(project_id: int, task_id: int, db: Session):
-    task = db.query(Task).filter(Task.id == task_id, Task.project_id == project_id).first()
+def delete_task(project_id: int, task_id: int, db: Session, current_user):
+    task = db.query(Task)\
+        .join(Project)\
+        .filter(Task.id == task_id, Task.project_id == project_id, Project.owner_id == current_user.id)\
+        .first()
+    
     if task:
         db.delete(task)
         db.commit()
@@ -77,8 +91,8 @@ def delete_task(project_id: int, task_id: int, db: Session):
             "error": f"task {task_id} not found"
         }
     
-def delete_project(project_id: int, db: Session):
-    project = db.query(Project).filter(Project.id == project_id).first()
+def delete_project(project_id: int, db: Session, current_user):
+    project = db.query(Project).filter(Project.id == project_id, Project.owner_id == current_user.id).first()
     if project:
         db.delete(project)
         db.commit()
@@ -90,8 +104,11 @@ def delete_project(project_id: int, db: Session):
             "error": f"project {project_id} not found"
         }
 
-def patch_task(project_id: int, task_id: int, update_data: UpdateTask, db: Session):
-    task = db.query(Task).filter(Task.id == task_id, Task.project_id == project_id).first()
+def patch_task(project_id: int, task_id: int, update_data: UpdateTask, db: Session, current_user):
+    task = db.query(Task)\
+        .join(Project)\
+        .filter(Task.id == task_id, Task.project_id == project_id, Project.owner_id == current_user.id)\
+        .first()
     if not task:
         raise HTTPException(status_code=404, detail="Task not found")
     
@@ -110,8 +127,8 @@ def patch_task(project_id: int, task_id: int, update_data: UpdateTask, db: Sessi
         "updated_task": task
     }
 
-def patch_project(project_id: int, update_data: UpdateProject, db: Session):
-    project = db.query(Project).filter(Project.id == project_id).first()
+def patch_project(project_id: int, update_data: UpdateProject, db: Session, current_user):
+    project = db.query(Project).filter(Project.id == project_id, Project.owner_id == current_user.id).first()
     if not project:
         raise HTTPException(status_code=404, detail="Project not found")
     
