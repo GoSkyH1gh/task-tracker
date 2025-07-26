@@ -7,6 +7,7 @@ from fastapi import HTTPException, status, Depends
 from sqlalchemy.orm import Session
 from dependencies import get_db
 from models import User
+from datetime import datetime, timedelta, timezone
 
 load_dotenv()
 
@@ -22,6 +23,7 @@ def get_password_hash(password):
 # openssl rand -hex 32
 SECRET_JWT_KEY = os.getenv("SECRET_JWT_KEY")
 ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 if SECRET_JWT_KEY is None:
     raise ValueError("Missing environment variable: SECRET_KEY is not set.")
@@ -32,6 +34,10 @@ def create_access_token(data: dict):
     """Takes a payload and creates a signed JWT."""
 
     to_encode = data.copy()
+
+    expire = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+
+    to_encode.update({"exp": expire})
 
     encoded_jwt = jwt.encode(to_encode, SECRET_JWT_KEY, algorithm=ALGORITHM)
     return encoded_jwt
