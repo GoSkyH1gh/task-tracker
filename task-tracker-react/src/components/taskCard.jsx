@@ -2,6 +2,7 @@ import { MdDelete } from "react-icons/md";
 import { AnimatePresence, motion } from "motion/react";
 import ConfirmDeleteDialog from "./confirmDeleteDialog";
 import getReadableDate from "./formatDates";
+import EditTaskDialog from "./editTaskDialog";
 
 function TaskCard({ tasks, fetchTasks }) {
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
@@ -28,9 +29,12 @@ function TaskCard({ tasks, fetchTasks }) {
             <h3>{task.title}</h3>
             <p>{task.description || <>No description</>}</p>
             {task.status} - {getReadableDate(task.created_at)}
-            <ConfirmDeleteDialog
-              functionToExecute={() => deleteTask(task.id, task.project_id)}
+            <div className="action-buttons-container">
+              <ConfirmDeleteDialog
+                functionToExecute={() => deleteTask(task.id, task.project_id)}
             />
+              <EditTaskDialog taskToEdit={task} fetchTasks={fetchTasks}/>
+            </div>
           </div>
         </motion.li>
     );

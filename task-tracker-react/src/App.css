@@ -62,3 +62,9 @@ a {
 a:hover {
   color: unset
 }
+
+.action-buttons-container {
+  display: flex;
+  gap: 15px;
+  justify-content: right;
+}

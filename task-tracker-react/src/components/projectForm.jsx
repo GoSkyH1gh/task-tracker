@@ -32,10 +32,9 @@ function TaskForm({ ownerID, fetchProjects, closeDialog }) {
   return (
       <form onSubmit={(e) => handleSubmit(e)}>
         <label>
-          Title
+          Title<br/>
           <input
             type="text"
-            className="title-input"
             required
             value={title}
             onChange={(e) => setTitle(e.target.value)}

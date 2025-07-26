@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import ConfirmDeleteDialog from "./confirmDeleteDialog";
+import EditProjectDialog from "./editProjectDialog";
 
 function ProjectCard({ projects, fetchProjects }) {
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
@@ -19,7 +20,10 @@ function ProjectCard({ projects, fetchProjects }) {
           <p>{project.description || <>No description</>}</p>
         </div>
       </Link>
-      <ConfirmDeleteDialog functionToExecute={() => deleteProject(project.id)} />
+      <div className="action-buttons-container">
+        <ConfirmDeleteDialog functionToExecute={() => deleteProject(project.id)} />
+        <EditProjectDialog projectToEdit={project} fetchProjects={fetchProjects} />
+      </div>
     </li>
     )
   return (

@@ -33,10 +33,9 @@ function TaskForm({ currentProject, fetchTasks, closeDialog }) {
   return (
       <form onSubmit={(e) => handleSubmit(e)}>
         <label>
-          Title
+          Title<br/>
           <input
             type="text"
-            className="title-input"
             required
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -52,7 +51,7 @@ function TaskForm({ currentProject, fetchTasks, closeDialog }) {
           />
         </label>
         <br />
-        <label>
+        <label>Status <br />
           <select value={status} onChange={(e) => setStatus(e.target.value)}>
             <option>To be done</option>
             <option>In progress</option>
