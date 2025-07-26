@@ -2,7 +2,7 @@ import { useState } from "react"
 import ReusableDialog from "./reusableDialog"
 import ProjectForm from "./projectForm"
 
-function ProjectDialog({ ownerID, fetchProjects }) {
+function ProjectDialog({ ownerID, fetchProjects, setProjects }) {
   const [open, setOpen] = useState(false);
   
   return (
@@ -11,6 +11,7 @@ function ProjectDialog({ ownerID, fetchProjects }) {
         ownerID={ownerID}
         fetchProjects={fetchProjects}
         closeDialog={() => setOpen(false)}
+        setProjects={setProjects}
       />
     </ReusableDialog>
   )

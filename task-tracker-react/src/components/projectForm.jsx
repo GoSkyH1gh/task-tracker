@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function TaskForm({ ownerID, fetchProjects, closeDialog }) {
+function TaskForm({ ownerID, fetchProjects, closeDialog, setProjects }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
@@ -25,7 +25,7 @@ function TaskForm({ ownerID, fetchProjects, closeDialog }) {
 
     let submitResponse = await submitResponseRaw.json();
     console.log(submitResponse);
-    fetchProjects();
+    fetchProjects(setProjects);
     closeDialog();
   };
 

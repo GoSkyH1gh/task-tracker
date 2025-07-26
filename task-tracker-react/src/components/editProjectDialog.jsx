@@ -4,7 +4,7 @@ import "./dialog.css";
 import { useState } from "react";
 import { motion } from "motion/react";
 
-function EditProjectDialog({ projectToEdit, fetchProjects }) {
+function EditProjectDialog({ projectToEdit, fetchProjects, setProjects }) {
   const [open, setOpen] = useState(false);
 
   const [name, setName] = useState(projectToEdit.name);
@@ -27,7 +27,7 @@ function EditProjectDialog({ projectToEdit, fetchProjects }) {
     );
     let updateProjectResponse = await updateProjectResponseRaw.json();
     console.log(updateProjectResponse);
-    fetchProjects();
+    fetchProjects(setProjects);
     setOpen(false);
   };
 

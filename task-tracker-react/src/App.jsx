@@ -18,11 +18,11 @@ function App() {
       {projects.length > 0 && (
         <>
           <p>You have {projects.length} projects</p>
-          <ProjectCard projects={projects} fetchProjects={fetchProjects} />
+          <ProjectCard projects={projects} fetchProjects={fetchProjects} setProjects={setProjects} />
         </>
       )}
       {projects.length === 0 && <p>You have no projects</p>}
-      <ProjectDialog ownerID={loggedInUser} fetchProjects={fetchProjects}/>
+      <ProjectDialog ownerID={loggedInUser} fetchProjects={fetchProjects} setProjects={setProjects} />
     </div>
   );
 }

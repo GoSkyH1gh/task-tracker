@@ -2,14 +2,14 @@ import { Link } from "react-router-dom";
 import ConfirmDeleteDialog from "./confirmDeleteDialog";
 import EditProjectDialog from "./editProjectDialog";
 
-function ProjectCard({ projects, fetchProjects }) {
+function ProjectCard({ projects, fetchProjects, setProjects }) {
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
   const deleteProject = async (projectID) => {
     let deleteProjectResponseRaw = await fetch(baseUrl + 'projects/' + projectID, {method: "DELETE"});
     let deleteProjectResponse = await deleteProjectResponseRaw.json();
     console.log(deleteProjectResponse);
-    fetchProjects();
+    fetchProjects(setProjects);
   }
 
   const mappedProjects = projects.map((project) => 
@@ -22,7 +22,7 @@ function ProjectCard({ projects, fetchProjects }) {
       </Link>
       <div className="action-buttons-container">
         <ConfirmDeleteDialog functionToExecute={() => deleteProject(project.id)} />
-        <EditProjectDialog projectToEdit={project} fetchProjects={fetchProjects} />
+        <EditProjectDialog projectToEdit={project} fetchProjects={fetchProjects} setProjects={ setProjects } />
       </div>
     </li>
     )
