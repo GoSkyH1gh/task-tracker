@@ -14,9 +14,27 @@ function TasksView() {
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
   const fetchTasks = async () => {
+    const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+        console.error("Not logged in")
+        return
+    }
+
+    const headers = {
+        'Authorization': `Bearer ${token}`
+    }
+
     let tasksResponseRaw = await fetch(
-      baseUrl + "projects/" + projectId + "/tasks"
+      baseUrl + "projects/" + projectId + "/tasks", { headers: headers }
     );
+
+    if (tasksResponseRaw.status === 401) {
+      localStorage.removeItem("accessToken");
+      window.location.href = "/login";
+      throw new Error("Unauthorized");
+    }
+
     let tasksResponse = await tasksResponseRaw.json();
 
     console.log(tasksResponse);

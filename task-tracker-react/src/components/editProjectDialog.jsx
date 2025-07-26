@@ -13,15 +13,22 @@ function EditProjectDialog({ projectToEdit, fetchProjects, setProjects }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const baseUrl = import.meta.env.VITE_API_BASE_URL;
+    const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+        console.error("Not logged in")
+        return
+    }
+
     const responseBody = {
       name: name,
-      description: description
+      description: description,
     };
     let updateProjectResponseRaw = await fetch(
       baseUrl + "projects/" + projectToEdit.id,
       {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(responseBody),
       }
     );

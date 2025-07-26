@@ -9,6 +9,13 @@ function TaskForm({ currentProject, fetchTasks, closeDialog }) {
     e.preventDefault();
     const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
+    const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+        console.error("Not logged in")
+        return
+    }
+
     const requestBody = {
       title: title,
       description: description,
@@ -19,7 +26,7 @@ function TaskForm({ currentProject, fetchTasks, closeDialog }) {
       baseUrl + "projects/" + currentProject + "/tasks",
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(requestBody),
       }
     );

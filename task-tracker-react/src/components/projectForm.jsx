@@ -7,6 +7,12 @@ function TaskForm({ ownerID, fetchProjects, closeDialog, setProjects }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const baseUrl = import.meta.env.VITE_API_BASE_URL;
+    const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+        console.error("Not logged in")
+        return
+    }
 
     const requestBody = {
       name: title,
@@ -18,7 +24,7 @@ function TaskForm({ ownerID, fetchProjects, closeDialog, setProjects }) {
       baseUrl + "projects",
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(requestBody),
       }
     );

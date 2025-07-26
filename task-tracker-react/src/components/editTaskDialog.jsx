@@ -13,6 +13,14 @@ function EditTaskDialog({ taskToEdit, fetchTasks }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+        console.error("Not logged in")
+        return
+    }
+
     const baseUrl = import.meta.env.VITE_API_BASE_URL;
     const responseBody = {
       title: title,
@@ -23,7 +31,7 @@ function EditTaskDialog({ taskToEdit, fetchTasks }) {
       baseUrl + "projects/" + taskToEdit.project_id + "/tasks/" + taskToEdit.id,
       {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(responseBody),
       }
     );

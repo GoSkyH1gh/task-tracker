@@ -4,9 +4,19 @@ import EditProjectDialog from "./editProjectDialog";
 
 function ProjectCard({ projects, fetchProjects, setProjects }) {
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
+  const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+        console.error("Not logged in")
+        return
+    }
+
+    const headers = {
+        'Authorization': `Bearer ${token}`
+    }
 
   const deleteProject = async (projectID) => {
-    let deleteProjectResponseRaw = await fetch(baseUrl + 'projects/' + projectID, {method: "DELETE"});
+    let deleteProjectResponseRaw = await fetch(baseUrl + 'projects/' + projectID, {method: "DELETE", headers: headers});
     let deleteProjectResponse = await deleteProjectResponseRaw.json();
     console.log(deleteProjectResponse);
     fetchProjects(setProjects);

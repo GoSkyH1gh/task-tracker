@@ -1,10 +1,29 @@
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const fetchProjects = async (setProjects) => {
-    let projectsResponseRaw = await fetch(baseUrl + "projects");
-    let projectsResponse = await projectsResponseRaw.json();
-    console.log(projectsResponse);
-    setProjects(projectsResponse);
-}
-  
-export default fetchProjects
+  const token = localStorage.getItem("accessToken");
+
+  if (!token) {
+    console.error("Not logged in");
+    window.location.href = "/login";
+    return;
+  }
+
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
+  let projectsResponseRaw = await fetch(baseUrl + "projects", {
+    headers: headers,
+  });
+  if (projectsResponseRaw.status === 401) {
+    localStorage.removeItem("accessToken");
+    window.location.href = "/login";
+    throw new Error("Unauthorized");
+  }
+  let projectsResponse = await projectsResponseRaw.json();
+  console.log(projectsResponse);
+  setProjects(projectsResponse);
+};
+
+export default fetchProjects;

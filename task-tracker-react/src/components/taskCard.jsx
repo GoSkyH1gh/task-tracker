@@ -7,10 +7,22 @@ import EditTaskDialog from "./editTaskDialog";
 function TaskCard({ tasks, fetchTasks }) {
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
+  const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+      console.error("Not logged in")
+      window.location.href = "/login";
+      return
+    }
+
+    const headers = {
+        'Authorization': `Bearer ${token}`
+    }
+
   const deleteTask = async (taskId, projectId) => {
     let deleteResponseRaw = await fetch(
       baseUrl + "projects/" + projectId + "/tasks/" + taskId,
-      { method: "DELETE" }
+      { method: "DELETE", headers: headers }
     );
     let deleteResponse = await deleteResponseRaw.json();
     console.log(deleteResponse);
