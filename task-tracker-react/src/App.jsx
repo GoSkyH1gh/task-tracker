@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 function App() {
   const [projects, setProjects] = useState([]);
 
-  const { token, setToken } = useAuth();
+  const { setToken } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {

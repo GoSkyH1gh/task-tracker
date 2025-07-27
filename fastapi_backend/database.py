@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
-from models import Base, User, Project, Task
+from sqlalchemy.orm import sessionmaker
+from models import Base
 import os
 
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://taskuser:taskpass@localhost:5432/taskmanager")

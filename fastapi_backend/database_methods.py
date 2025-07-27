@@ -2,7 +2,6 @@ from pydantic import BaseModel
 from typing import Optional
 from sqlalchemy.orm import Session
 from models import Project, Task
-from datetime import datetime
 from fastapi import HTTPException
 
 class NewProject(BaseModel):
@@ -38,7 +37,7 @@ def create_project(project: NewProject, db: Session, current_user):
         print(f"Something went wrong when creating project {project.name}: {e}")
         db.rollback()
         return {
-            "error": f"Project could not be created"
+            "error": f"Project {project.name} could not be created"
         }
 
 def get_tasks_from_project(id: int, db: Session, current_user):

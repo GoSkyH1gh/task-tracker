@@ -3,11 +3,11 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 from dependencies import get_db
-from models import User, Project, Task
+from models import Project
 from auth_models import UserCreate
 from database_methods import NewProject, NewTask, UpdateTask, UpdateProject
 from database_methods import create_project, get_tasks_from_project, create_task, delete_task, delete_project, patch_task, patch_project
-from auth_methods import create_user, check_token, create_access_token
+from auth_methods import create_user, check_token
 from auth_utils import get_current_user
 
 app = FastAPI()

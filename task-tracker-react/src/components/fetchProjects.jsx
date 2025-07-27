@@ -1,5 +1,4 @@
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
-import { useNavigate } from "react-router-dom";
 
 const fetchProjects = async (setProjects) => {
   const token = localStorage.getItem("accessToken");

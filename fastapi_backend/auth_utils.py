@@ -74,6 +74,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     return user
 
 if __name__ == "__main__":
-    hash = get_password_hash("123")
-    print(hash)
-    print(verify_password("nicePass", "$2b$12$YlHVBtHJbWu8IJbkYKabh.p88SzlP7sqnz8RMT.W61siW/RrsFbvO"))
+    pass
+    # hash = get_password_hash("123")
+    # print(hash)
+    # print(verify_password("nicePass", "$2b$12$YlHVBtHJbWu8IJbkYKabh.p88SzlP7sqnz8RMT.W61siW/RrsFbvO"))

@@ -1,4 +1,3 @@
-import { MdDelete } from "react-icons/md";
 import { AnimatePresence, motion } from "motion/react";
 import ConfirmDeleteDialog from "./confirmDeleteDialog";
 import getReadableDate from "./formatDates";

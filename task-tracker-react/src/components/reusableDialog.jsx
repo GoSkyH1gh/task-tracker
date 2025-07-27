@@ -1,6 +1,5 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import "./dialog.css";
-import { useState } from "react";
 
 function ReusableDialog({ open, setOpen, title, children }) {
   return (
