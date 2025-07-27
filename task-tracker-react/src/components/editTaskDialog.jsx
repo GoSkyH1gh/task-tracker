@@ -89,7 +89,7 @@ function EditTaskDialog({ taskToEdit, fetchTasks }) {
               </select>
             </label>
             <div className="task-form-buttons">
-            <Dialog.Close>Cancel</Dialog.Close>
+            <Dialog.Close asChild><button type="button">Cancel</button></Dialog.Close>
             <button className="success-button">Save</button>
           </div>
           </form>

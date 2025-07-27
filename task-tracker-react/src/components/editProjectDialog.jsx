@@ -74,7 +74,7 @@ function EditProjectDialog({ projectToEdit, fetchProjects, setProjects }) {
               />
             </label>
             <div className="task-form-buttons">
-            <Dialog.Close>Cancel</Dialog.Close>
+            <Dialog.Close asChild><button type="button">Cancel</button></Dialog.Close>
             <button className="success-button">Save</button>
           </div>
           </form>

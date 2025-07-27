@@ -10,7 +10,6 @@ function TaskCard({ tasks, fetchTasks }) {
 
     if (!token) {
       console.error("Not logged in")
-      window.location.href = "/login";
       return
     }
 

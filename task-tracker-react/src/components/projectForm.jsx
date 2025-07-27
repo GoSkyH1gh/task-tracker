@@ -56,7 +56,7 @@ function TaskForm({ fetchProjects, closeDialog, setProjects }) {
         <br />
         <br />
         <div className="task-form-buttons">
-          <button onClick={() => closeDialog()}>Cancel</button>
+          <button onClick={() => closeDialog()} type="button">Cancel</button>
           <button className="success-button">Done</button>
         </div>
       </form>
