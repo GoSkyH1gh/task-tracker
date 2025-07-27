@@ -47,29 +47,31 @@ function LoginPage() {
   };
 
   return (
-    <form onSubmit={handleLoginSubmit}>
-      <label>
-        Email
+    <div className="content-container">
+      <form onSubmit={handleLoginSubmit}>
+        <label>
+          Email
+          <br />
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </label>
         <br />
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </label>
-      <br />
-      <label>
-        Password
+        <label>
+          Password
+          <br />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </label>
         <br />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </label>
-      <br />
-      <button>login</button>
-    </form>
+        <button>login</button>
+      </form>
+    </div>
   );
 }
 

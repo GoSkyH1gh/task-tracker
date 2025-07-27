@@ -8,7 +8,6 @@ function ProjectDialog({ ownerID, fetchProjects, setProjects }) {
   return (
     <ReusableDialog open={open} setOpen={setOpen} title={"Create Project"}>
       <ProjectForm 
-        ownerID={ownerID}
         fetchProjects={fetchProjects}
         closeDialog={() => setOpen(false)}
         setProjects={setProjects}

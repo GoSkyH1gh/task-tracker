@@ -1,11 +1,11 @@
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
+import { useNavigate } from "react-router-dom";
 
 const fetchProjects = async (setProjects) => {
   const token = localStorage.getItem("accessToken");
 
   if (!token) {
     console.error("Not logged in");
-    window.location.href = "/login";
     return;
   }
 
@@ -18,7 +18,6 @@ const fetchProjects = async (setProjects) => {
   });
   if (projectsResponseRaw.status === 401) {
     localStorage.removeItem("accessToken");
-    window.location.href = "/login";
     throw new Error("Unauthorized");
   }
   let projectsResponse = await projectsResponseRaw.json();

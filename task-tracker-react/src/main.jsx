@@ -6,6 +6,7 @@ import TasksView from './tasksView.jsx'
 import './index.css'
 import App from './App.jsx'
 import LoginPage from './loginPage.jsx'
+import ProtectedRoute from './components/protectedRoute.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -13,8 +14,8 @@ createRoot(document.getElementById('root')).render(
       <AuthProvider>
         <Routes>
           <Route path='/login' element={<LoginPage />} />
-          <Route path="/" element={<App />}/>
-          <Route path='/projects/:projectId' element={<TasksView />}/>
+          <Route path="/" element={<ProtectedRoute><App /></ProtectedRoute>}/>
+          <Route path='/projects/:projectId' element={<ProtectedRoute><TasksView /></ProtectedRoute>}/>
         </Routes>
       </AuthProvider>
     </BrowserRouter>
